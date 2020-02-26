@@ -268,7 +268,6 @@ public:
         uint16_t wp_number;
     };
 
-    void set_nav_info(NavInfo &nav_info);
     // disable the display
     void disable() {
         _disable = true;
@@ -284,6 +283,7 @@ private:
     void stats();
     void update_current_screen();
     void next_screen();
+    void update_nav_info();
     AP_OSD_Backend *backend;
 
     //variables for screen switching

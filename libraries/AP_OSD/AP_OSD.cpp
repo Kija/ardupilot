@@ -29,6 +29,8 @@
 #include <AP_BattMonitor/AP_BattMonitor.h>
 #include <utility>
 #include <AP_Notify/AP_Notify.h>
+#include <AP_Vehicle/AP_Vehicle.h>
+#include <AP_Mission/AP_Mission.h>
 
 const AP_Param::GroupInfo AP_OSD::var_info[] = {
 
@@ -163,6 +165,9 @@ const AP_Param::GroupInfo AP_OSD::var_info[] = {
 
 extern const AP_HAL::HAL& hal;
 
+// refresh nav_info every 500ms not faster
+uint32_t nav_info_timer;
+
 // singleton instance
 AP_OSD *AP_OSD::_singleton;
 
@@ -237,6 +242,7 @@ void AP_OSD::update_osd()
     if (!_disable) {
         stats();
         update_current_screen();
+        update_nav_info();
 
         screen[current_screen].set_backend(backend);
         screen[current_screen].draw();
@@ -390,11 +396,22 @@ void AP_OSD::next_screen()
     current_screen = t;
 }
 
-// set navigation information for display
-void AP_OSD::set_nav_info(NavInfo &navinfo)
+//update navigation information for display @2Hz
+void AP_OSD::update_nav_info()
 {
-    // do this without a lock for now
-    nav_info = navinfo;
+    uint32_t now = AP_HAL::millis();
+    if (now - nav_info_timer > 500) {
+        AP_Vehicle*  vehicle = AP::vehicle();
+        
+        float deg;
+        vehicle->get_wp_bearing_d(deg);
+        nav_info.wp_bearing = roundf(deg*100);
+        vehicle->get_wp_crosstrack_error_m(nav_info.wp_xtrack_error);
+        vehicle->get_wp_distance_m(nav_info.wp_distance);
+        nav_info.wp_number = AP::mission()->get_current_nav_index();
+
+        nav_info_timer = 0;
+    }
 }
 
 AP_OSD *AP::osd() {
