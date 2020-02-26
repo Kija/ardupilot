@@ -141,6 +141,33 @@ Mode *Tracker::mode_from_mode_num(const Mode::Number num)
 }
 
 /*
+  get the distance to next wp
+  return false if failed or n/a
+ */
+bool Tracker::get_wp_distance_m(float &distance)
+{
+    return false;
+}
+
+/*
+  get the current wp bearing
+  return false if failed or n/a
+ */
+bool Tracker::get_wp_bearing_d(float &bearing)
+{
+    return false;
+}
+
+/*
+  get the current wp crosstrack error
+  return false if failed or n/a
+ */
+bool Tracker::get_wp_crosstrack_error_m(float &xtrack_error)
+{
+    return false;
+}
+
+/*
   update AP_Stats
 */
 void Tracker::stats_update(void)
