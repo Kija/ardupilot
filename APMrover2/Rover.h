@@ -126,6 +126,11 @@ public:
 
     Rover(void);
 
+    // get waypoint info
+    bool get_wp_distance_m(float &distance) override;
+    bool get_wp_bearing_d(float &bearing) override;
+    bool get_wp_crosstrack_error_m(float &xtrack_error) override;
+
 private:
 
     // must be the first AP_Param variable declared to ensure its
@@ -387,10 +392,6 @@ private:
     uint8_t check_digital_pin(uint8_t pin);
     bool should_log(uint32_t mask);
     bool is_boat() const;
-
-#if OSD_ENABLED == ENABLED
-    void publish_osd_info();
-#endif
 
     enum Failsafe_Action {
         Failsafe_Action_None          = 0,
