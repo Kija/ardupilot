@@ -160,6 +160,11 @@ public:
 
     Plane(void);
 
+    // get waypoint info
+    bool get_wp_distance_m(float &distance) override;
+    bool get_wp_bearing_d(float &bearing) override;
+    bool get_wp_crosstrack_error_m(float &xtrack_error) override;
+
 private:
 
     // key aircraft parameters passed to multiple libraries
@@ -997,9 +1002,6 @@ private:
     void do_parachute(const AP_Mission::Mission_Command& cmd);
     void parachute_release();
     bool parachute_manual_release();
-#endif
-#if OSD_ENABLED == ENABLED
-    void publish_osd_info();
 #endif
     void accel_cal_update(void);
 #if SOARING_ENABLED == ENABLED

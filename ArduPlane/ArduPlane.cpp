@@ -100,9 +100,6 @@ const AP_Scheduler::Task Plane::scheduler_tasks[] = {
 #if GRIPPER_ENABLED == ENABLED
     SCHED_TASK_CLASS(AP_Gripper, &plane.g2.gripper, update, 10, 75),
 #endif
-#if OSD_ENABLED == ENABLED
-    SCHED_TASK(publish_osd_info, 1, 10),
-#endif
 #if LANDING_GEAR_ENABLED == ENABLED
     SCHED_TASK(landing_gear_update, 5, 50),
 #endif
@@ -687,16 +684,34 @@ float Plane::tecs_hgt_afe(void)
     return hgt_afe;
 }
 
-#if OSD_ENABLED == ENABLED
-void Plane::publish_osd_info()
+/*
+  get the distance to next wp
+  return false if failed or n/a
+ */
+bool Plane::get_wp_distance_m(float &distance)
 {
-    AP_OSD::NavInfo nav_info;
-    nav_info.wp_distance = auto_state.wp_distance;
-    nav_info.wp_bearing = nav_controller->target_bearing_cd();
-    nav_info.wp_xtrack_error = nav_controller->crosstrack_error();
-    nav_info.wp_number = mission.get_current_nav_index();
-    osd.set_nav_info(nav_info);
+    distance = auto_state.wp_distance;
+    return true;
 }
-#endif
+
+/*
+  get the current wp bearing
+  return false if failed or n/a
+ */
+bool Plane::get_wp_bearing_d(float &bearing)
+{
+    bearing = nav_controller->target_bearing_cd() * 0.01;
+    return true;
+}
+
+/*
+  get the current wp crosstrack error
+  return false if failed or n/a
+ */
+bool Plane::get_wp_crosstrack_error_m(float &xtrack_error)
+{
+    xtrack_error = nav_controller->crosstrack_error();
+    return true;
+}
 
 AP_HAL_MAIN_CALLBACKS(&plane);
