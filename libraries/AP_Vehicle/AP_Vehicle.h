@@ -161,6 +161,24 @@ public:
         return AP_HAL::millis() - _last_flying_ms;
     }
 
+    /*
+      get the distance to next wp in meters
+      return false if failed or n/a
+     */
+    virtual bool get_wp_distance_m(float &distance) = 0;
+
+    /*
+      get the current wp bearing in degrees
+      return false if failed or n/a
+     */
+    virtual bool get_wp_bearing_d(float &bearing) = 0;
+
+    /*
+      get the current wp crosstrack error in meters
+      return false if failed or n/a
+     */
+    virtual bool get_wp_crosstrack_error_m(float &xtrack_error) = 0;
+
 protected:
 
     virtual void init_ardupilot() = 0;
