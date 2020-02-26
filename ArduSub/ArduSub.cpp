@@ -345,4 +345,31 @@ bool Sub::control_check_barometer()
     return true;
 }
 
+/*
+  get the distance to next wp
+  return false if failed or n/a
+ */
+bool Sub::get_wp_distance_m(float &distance)
+{
+    return false;
+}
+
+/*
+  get the current wp bearing
+  return false if failed or n/a
+ */
+bool Sub::get_wp_bearing_d(float &bearing)
+{
+    return false;
+}
+
+/*
+  get the current wp crosstrack error
+  return false if failed or n/a
+ */
+bool Sub::get_wp_crosstrack_error_m(float &xtrack_error)
+{
+    return false;
+}
+
 AP_HAL_MAIN_CALLBACKS(&sub);

@@ -130,6 +130,11 @@ public:
 
     Sub(void);
 
+    // get waypoint info
+    bool get_wp_distance_m(float &distance) override;
+    bool get_wp_bearing_d(float &bearing) override;
+    bool get_wp_crosstrack_error_m(float &xtrack_error) override;
+
 private:
 
     // key aircraft parameters passed to multiple libraries
