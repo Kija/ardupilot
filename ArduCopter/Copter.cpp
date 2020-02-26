@@ -205,9 +205,6 @@ const AP_Scheduler::Task Copter::scheduler_tasks[] = {
 #if STATS_ENABLED == ENABLED
     SCHED_TASK_CLASS(AP_Stats,             &copter.g2.stats,            update,           1, 100),
 #endif
-#if OSD_ENABLED == ENABLED
-    SCHED_TASK(publish_osd_info, 1, 10),
-#endif
 };
 
 void Copter::get_scheduler_tasks(const AP_Scheduler::Task *&tasks,
@@ -582,17 +579,35 @@ void Copter::update_altitude()
     }
 }
 
-#if OSD_ENABLED == ENABLED
-void Copter::publish_osd_info()
+/*
+  get the distance to next wp
+  return false if failed or n/a
+ */
+bool Copter::get_wp_distance_m(float &distance)
 {
-    AP_OSD::NavInfo nav_info;
-    nav_info.wp_distance = flightmode->wp_distance() * 1.0e-2f;
-    nav_info.wp_bearing = flightmode->wp_bearing();
-    nav_info.wp_xtrack_error = flightmode->crosstrack_error() * 1.0e-2f;
-    nav_info.wp_number = mode_auto.mission.get_current_nav_index();
-    osd.set_nav_info(nav_info);
+    distance = flightmode->wp_distance() * 1.0e-2f;
+    return true;
 }
-#endif
+
+/*
+  get the current wp bearing
+  return false if failed or n/a
+ */
+bool Copter::get_wp_bearing_d(float &bearing)
+{
+    bearing = flightmode->wp_bearing() * 0.01;
+    return true;
+}
+
+/*
+  get the current wp crosstrack error
+  return false if failed or n/a
+ */
+bool Copter::get_wp_crosstrack_error_m(float &xtrack_error)
+{
+    xtrack_error = flightmode->crosstrack_error() * 1.0e-2f;
+    return true;
+}
 
 /*
   constructor for main Copter class
