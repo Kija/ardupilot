@@ -385,6 +385,23 @@ const AP_Param::GroupInfo AP_MSP::var_info[] = {
     // @Description: Vertical position on screen
     // @Range: 0 15
     AP_SUBGROUPINFO(aspd, "_OSD_ASPD", 23, AP_MSP, AP_OSD_Setting),
+    
+    // @Param: _OSD_AHBARS_EN
+    // @DisplayName: _OSD_AHBARS_EN
+    // @Description: Displays ahbars (ladders)
+    // @Values: 0:Disabled,1:Enabled
+
+    // @Param: _OSD_AHBARS_X
+    // @DisplayName: _OSD_AHBARS_X
+    // @Description: Horizontal position on screen
+    // @Range: 0 27
+
+    // @Param: _OSD_AHBARS_Y
+    // @DisplayName: _OSD_AHBARS_Y
+    // @Description: Vertical position on screen
+    // @Range: 0 15
+    AP_SUBGROUPINFO(ahbars, "_OSD_ASPD", 23, AP_MSP, AP_OSD_Setting),
+    
     AP_GROUPEND
 };
 
