@@ -400,7 +400,7 @@ const AP_Param::GroupInfo AP_MSP::var_info[] = {
     // @DisplayName: _OSD_AHBARS_Y
     // @Description: Vertical position on screen
     // @Range: 0 15
-    AP_SUBGROUPINFO(ahbars, "_OSD_ASPD", 23, AP_MSP, AP_OSD_Setting),
+    AP_SUBGROUPINFO(ahbars, "_OSD_AHBARS", 23, AP_MSP, AP_OSD_Setting),
     
     AP_GROUPEND
 };
